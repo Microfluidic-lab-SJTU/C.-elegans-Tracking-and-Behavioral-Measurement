@@ -320,5 +320,5 @@ def getSkeleton(worm_cnt, prev_skeleton=np.zeros(0), resampling_N=49,
         cnt_side2,
         cnt_widths,
         cnt_area)
-    assert len(output_data) == n_output_param
+    #assert len(output_data) == n_output_param
     return output_data

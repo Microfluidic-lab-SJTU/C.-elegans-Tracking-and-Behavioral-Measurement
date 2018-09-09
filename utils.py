@@ -38,9 +38,9 @@ def thresh_otsu(img,*args):
 	ret,th=cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 	return th
 	
-def resize_and_gray(img,return_color=False):
+def resize_and_gray(img,return_color=False,scale=2.):
 	w,h,c=img.shape
-	shape=(int(h/2),int(w/2))
+	shape=(int(h/scale),int(w/scale))
 	img=cv2.resize(img,shape)
 	gray_img=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	if return_color:
@@ -212,9 +212,8 @@ class show_img:
 		if k==27:
 			cv2.destroyAllWindows()
 class frame_factory:
-	def __init__(self,params):
-		self.params=params
-		self.cap=cv2.VideoCapture(params['video_path'])
+	def __init__(self,path):
+		self.cap=cv2.VideoCapture(path)
 		self.map={}
 		self.num_frames=int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 		_,self.map[0]=self.cap.read()
@@ -241,7 +240,7 @@ class frame_factory:
 			raise Exception("error")
 	
 	def reset(self):
-		self.cap=cv2.VideoCapture(self.params['video_path'])
+		self.cap=cv2.VideoCapture(path)
 		self.map={}
 		_,self.map[0]=self.cap.read()
 		self.tail=0
